@@ -1,0 +1,32 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$("#showAlbum").click(function(){
+				$("#album").toggle();
+			});
+		});
+	
+</script>
+
+<html>
+<p><%= messages %></p>
+<form method="post" enctype="multipart/form-data">
+<input type="file" name="myimage" multiple="true"><br>
+<br><br>
+Enter the album id by selecting from <a id="showAlbum" style="color: blue">here</a><br><br>
+<input type="text" placeholder="albumid" name="album"> 
+<input type="submit" name="submit">
+</form>
+<br><br>
+<div id="album" style="display: none">
+
+
+	<% for(var i=0;i<albums.length;i++){%>
+		<a href="/videos/<%= albums[i].id %>">Name:-<%= albums[i].name %></a><br>
+		Id:-  <%= albums[i]._id; %>
+		<br><br><br>
+	<% } %>
+
+
+</div>
+</html>
