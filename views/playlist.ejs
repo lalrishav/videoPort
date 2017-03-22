@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1><center><%= playlist.name %></center></h1>
+<% if(playlist.videos.length==0){ %>
+<h4>Your playlist is empty u r requested to add videos to it</h4>
+<% }else{ %>
+<h4>Add some more videos to the playlist</h4>
+<% } %><br><br>
+
+<h3>Add videos</h3><br><br>
+<% for(var i=0;i<video.length;i++){%>
+<%= video[i].name %>:-<input type="button" value="add" onclick="location.href=window.location.href+'/<%= video[i]._id %>'"><br>
+<% } %>
+</body>
+</html>

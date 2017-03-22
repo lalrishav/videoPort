@@ -61,7 +61,7 @@ exports.uploadVideo = function(req,res,callback){
 
 				
 			)
-				callback({'res':true});
+				callback({'res':true}); 
 			}
 
 

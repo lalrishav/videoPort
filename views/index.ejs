@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>Welcome to your videoport</h1>
+Well
+
+
+<h4>Recent videos</h4>
+<% if(video.length > 5){ %>
+	<% var k = 5 %>
+<% }else{ %>
+	<% var k = video.length; %>
+<% } %>
+
+<% for(var t=0;t<k;t++){ %>
+<a href=""><%= video[t].name %></a><br>
+<% } %>
+
+<h4>Recent albums</h4>
+
+<% if(album.length > 5){ %>
+	<% var i = 5 %>;
+<% }else{ %>
+	<% var i = album.length; %>
+<% } %>
+
+<% for(var j=0;j<i;j++){ %>
+<a href=""><%= album[j].name %></a><br>
+<% } %><br><br><br>
+
+<h1>Playlists</h1>
+<% for(var i=0;i<playlist.length;i++){ %>
+	<a href="/playlist/<%= playlist[i]._id %>"><%= playlist[i].name %></a>:- <%= playlist[i].videos.length %><br>
+<% } %>
+<h1>Create u r own playlist here:-</h1>
+<form action="/create/playlist" method="post">
+	<input type="text" name="name" placeholder="playlist name"><br><br>
+	<input type="submit" value="Create">
+</form>
+</body>
+</html>

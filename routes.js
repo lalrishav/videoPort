@@ -1,6 +1,6 @@
 var admin = require('./controllers/admin.js');
 var album = require('./controllers/album.js');
-var track = require('./controllers/track.js');
+var video = require('./controllers/video.js');
 var security = require('./controllers/security.js');
 var mongoose = require('mongoose');
 var albumModel = mongoose.model('Album');
@@ -70,20 +70,46 @@ module.exports = function(app){
 		res.send("<html><h1>404 ERROr</h1></html>")
 	})
 
+	app.get('/',(req,res)=>{
+		var data = {};
+		album.allLatest(req,res,(found)=>{
+			
+			data.album = found['data'];
+			video.allLatest(req,res,(founds)=>{
+				data.video = founds['data'];
+				video.allPlaylist(req,res,(foundss)=>{
+					data.playlist = foundss['data'];
+					res.render('index',data);
+				})
+			})
+		})
+	})
+
+	app.post('/create/playlist',(req,res)=>{
+		video.createPlaylist(req,res,(found)=>{
+			res.redirect("/");
+		})
+	})
+
+	app.get('/playlist/:pid',(req,res)=>{
+		var data = {};
+		video.getPlaylist(req,res,(found)=>{
+			console.log(found['data']);
+			data.playlist = found['data'];
+			video.allLatest(req,res,(founds)=>{
+				data.video = founds['data'];
+				res.render('playlist',data);
+			})
+			
+		})
+	})
+
+	app.get('/playlist/:pid/:vid',(req,res)=>{
+		video.addVideo(req,res,(found)=>{
+			
+		})
+	})
+
 	
 }
 
-var find = function(req,res){
-		var i = req.body.album;
-		console.log(i);
-		console.log('going to find');
-		var album = {};
-		albumModel.findById(i,function(err,data){
-			if(err)
-				throw err;
-			else{
-				console.log('abcd');
-				return data;
-			}
-		})
-}

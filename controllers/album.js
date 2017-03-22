@@ -16,5 +16,17 @@ exports.all = function(req,res,callback){
 	}).sort([['name', 'ascending']])
 }
 
+exports.allLatest = function(req,res,callback){
+	let searchParm = {};
+	searchParm.isDisabled = false;
+	albumModel.find(searchParm,function(err,found){
+		if(err)
+			throw err;
+
+		else
+			callback({'res':true,'data':found});
+	}).sort([['dateCreated','descending']]);
+}
+
 
 

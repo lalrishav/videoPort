@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
 var videoSchema = new Schema({
 	name		: {type:String,required:true},
 	createdAt	: {type:String,default:new Date()},
