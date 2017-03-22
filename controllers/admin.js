@@ -1,5 +1,6 @@
 var fs = require('fs');
 var mongoose = require('mongoose');
+var async = require('async');
 require('../model/album.js');
 require('../model/video.js');
 require('../model/track.js');
@@ -30,48 +31,40 @@ exports.createAlbum = function(req,res,callback){
 	
 }
 
-/*exports.uploadVideo = function(req,res,callback){
-	var i=0;
-	req.files.forEach(function(key){
-		albumModel.findOne({'_id':req.body.album},function(err,data){
-			console.log(data);
+exports.uploadVideo = function(req,res,callback){
+	albumModel.findOne({'_id':req.body.album},function(err,data){
 			if(err)
 				throw err;
 			else{
-				new videoModel({
-					name 	: 	req.files[i].originalname,
-					album 	: 	data
-				}).save(function(err,data){
+				//console.log(album);
+				console.log('hello');
+				var i=0;
+				var calls = [];
+				async.each(req.files,function(key,callback){
+					new videoModel({
+						name   : key.originalname,
+						album  : data
+					}).save(function(err,found){
+						if(err)
+							throw err;
+						console.log('inside save '+found.name);
+						callback();
+					})
+				},
+					function(err){
 					if(err)
 						throw err;
-					else
-						console.log('new video added to album '+data.name);
-				})
+					console.log('baharnikal gye');
+				}
+
+				
+
+				
+			)
+				callback({'res':true});
 			}
-		})
 
 
-		
-		
-
-		i++;
 	})
-	callback({'res':true,'flash-message':req.flash('uploadStatus','Files uploaded successfully')});
-	
-
-}*/
-
-
-
-
-exports.uploadVideo = function(req,res,callback){
-	let params = {};
-	console.log(typeof req.body.album);
-	params._id = req.body.album;
-
-	albumModel.find(params,function(err,data){
-		console.log(data);
-	})
-
-
 }
+

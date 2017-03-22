@@ -43,70 +43,9 @@ module.exports = function(app){
 	})
 
 	app.post('/uploadVideo',upload.any(),function(req,res){
-		
-	
-		/*var i = [];
-		i[0]=req.body.album;
-		console.log('------');
-		console.log(i);
-		console.log('--------');
-		//console.log(i);
-		var calls = [];
-		var datas = [];
-		i.forEach(function(k){
-			console.log(typeof k);
-			console.log('hello');
-			var j = k;
-			calls.push(function(callback){
-				albumModel.findOne({'_id':j},function(err,album){
-					if(err)
-						throw err;
-					console.log(k);
-					
-					 console.log('inside findone');
-					 datas.rishav = album;
-					callback(null,req);
-				})
-			})
-		})
 
-		async.parallel(calls,function(err,res){
-			if(err)
-				throw err;
-			//console.log(res);
-			console.log('this is calls');
-			console.log(calls);
-		})*/
-
-		albumModel.findOne({'_id':'58c916740ee85f12c0246d1d'},function(err,data){
-			if(err)
-				throw err;
-			else{
-				//console.log(album);
-				console.log('hello');
-				var i=0;
-				var calls = [];
-				async.each(req.files,function(key,callback){
-					new videoModel({
-						name   : key.originalname,
-						album  : data
-					}).save(function(err,found){
-						if(err)
-							throw err;
-						console.log('inside save '+found.name);
-						callback();
-					})
-				},
-					function(err){
-					if(err)
-						throw err;
-					console.log('baharnikal gye');
-				}
-
-				)
-
-				
-			}
+		admin.uploadVideo(req,res,(found)=>{
+			console.log(found);
 		})
 
 		
